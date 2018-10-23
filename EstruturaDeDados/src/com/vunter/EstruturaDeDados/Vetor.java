@@ -30,7 +30,7 @@ public class Vetor {
 	}
 
 	public boolean adiciona(Object elemento, int posicao) {
-		if (posicao == tamanho) { //Verifica se a posição é pra inserir no ultimo do vetor
+		if (posicao == tamanho) { // Verifica se a posição é pra inserir no ultimo do vetor
 			System.out.println("Ultimo item!");
 			this.adiciona(elemento);
 
