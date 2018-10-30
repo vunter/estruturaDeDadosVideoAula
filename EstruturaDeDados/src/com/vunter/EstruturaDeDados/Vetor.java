@@ -2,7 +2,7 @@ package com.vunter.EstruturaDeDados;
 
 import java.util.Arrays;
 
-public class Vetor {
+public class Vetor<T> {
 	private Object[] elementos;
 	private int tamanho;
 
@@ -21,7 +21,7 @@ public class Vetor {
 		return false;
 	}
 
-	public boolean adiciona(Object elemento, int posicao) {
+	public boolean adicionaNaPosicao(Object elemento, int posicao) {
 		this.aumentaCapacidade();
 		if (posicao == tamanho) { // Verifica se a posição é pra inserir no ultimo do vetor
 			System.out.println("Ultimo item!");
@@ -81,20 +81,28 @@ public class Vetor {
 		}
 	}
 
-	public Object busca(int posicao) { // Busca por posição
+	public Object buscaPosicao(int posicao) { // Busca por posição
 		if (!(posicao >= 0 && posicao < tamanho)) {
 			throw new IllegalArgumentException("Posição Inválida!");
 		}
 		return elementos[posicao];
 	}
 
-	public int busca(Object elemento) { // Busca pelo objeto
+	public int buscaElemento(Object elemento) { // Busca pelo objeto
 		for (int i = 0; i < this.tamanho; i++) {
 			if (this.elementos[i].equals(elemento)) {
 				return i;
 			}
 		}
 		return -1;
+	}
+	
+	public String mostraElementoNaPosicao(int posicao) {
+		String elemento;
+		elemento = this.elementos[posicao].toString();
+		
+		
+		return elemento;
 	}
 
 	@Override
