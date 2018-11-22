@@ -2,26 +2,26 @@ package com.vunter.EstruturaDeDados;
 
 import java.util.Arrays;
 
-public class Vetor {
-	private Object[] elementos;
+public class VetorGenerico<T> {
+	private T[] elementos;
 	private int tamanho;
 
-	public Vetor(int capacidade) {
-		this.elementos = new Object[capacidade];
+	public VetorGenerico(int capacidade) {
+		this.elementos = (T[]) new Object[capacidade];
 		this.tamanho = 0;
 	}
 
-	public boolean adiciona(Object elemento) {
+	public boolean adiciona(T elemento) {
 		this.aumentaCapacidade();
 		if (this.tamanho < this.elementos.length) {
-			this.elementos[this.tamanho] = elemento;
+			this.elementos[this.tamanho] = (T) elemento;
 			this.tamanho++;
 			return true;
 		}
 		return false;
 	}
 
-	public boolean adicionaNaPosicao(Object elemento, int posicao) {
+	public boolean adicionaNaPosicao(T elemento, int posicao) {
 		this.aumentaCapacidade();
 		if (posicao == tamanho) { // Verifica se a posição é pra inserir no ultimo do vetor
 			System.out.println("Ultimo item!");
@@ -37,7 +37,7 @@ public class Vetor {
 			for (int i = this.tamanho - 1; i >= posicao; i--) {
 				this.elementos[i + 1] = this.elementos[i];
 			}
-			this.elementos[posicao] = elemento;
+			this.elementos[posicao] = (T) elemento;
 			this.tamanho++;
 		}
 		return true;
@@ -53,7 +53,7 @@ public class Vetor {
 		this.tamanho--;
 	}
 
-	public void removePorNome(Object elemento) {
+	public void removePorNome(T elemento) {
 		int posicao = -1;
 		for (int i = 0; i < this.tamanho; i++) {
 			if (this.elementos[i].equals(elemento)) {
@@ -73,22 +73,22 @@ public class Vetor {
 
 	private void aumentaCapacidade() {
 		if (this.tamanho == this.elementos.length) {
-			Object[] elementosNovos = new Object[this.elementos.length * 2];
+			T[] elementosNovos = (T[]) new Object[this.elementos.length * 2];
 			for (int i = 0; i < elementos.length; i++) {
 				elementosNovos[i] = this.elementos[i];
 			}
-			this.elementos = elementosNovos;
+			this.elementos = (T[]) elementosNovos;
 		}
 	}
 
-	public Object buscaPosicao(int posicao) { // Busca por posição
+	public T buscaPosicao(int posicao) { // Busca por posição
 		if (!(posicao >= 0 && posicao < tamanho)) {
 			throw new IllegalArgumentException("Posição Inválida!");
 		}
 		return elementos[posicao];
 	}
 
-	public int buscaElemento(Object elemento) { // Busca pelo objeto
+	public int buscaElemento(T elemento) { // Busca pelo objeto
 		for (int i = 0; i < this.tamanho; i++) {
 			if (this.elementos[i].equals(elemento)) {
 				return i;
@@ -108,7 +108,7 @@ public class Vetor {
 	public String toString() {
 
 		StringBuilder s = new StringBuilder();
-		
+
 
 		for (int i = 0; i < this.tamanho - 1; i++) {
 			s.append(this.elementos[i]);
@@ -117,7 +117,17 @@ public class Vetor {
 		if (this.tamanho > 0) {
 			s.append(this.elementos[this.tamanho - 1]);
 		}
+
 		return s.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.deepHashCode(elementos);
+		result = prime * result + tamanho;
+		return result;
 	}
 
 	@Override
@@ -128,7 +138,7 @@ public class Vetor {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Vetor other = (Vetor) obj;
+		VetorGenerico<T> other = (VetorGenerico<T>) obj;
 		if (!Arrays.deepEquals(elementos, other.elementos))
 			return false;
 		if (tamanho != other.tamanho)
